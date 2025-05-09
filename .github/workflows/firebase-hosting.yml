@@ -3,16 +3,20 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main
+      - main          # Cada vez que hagas push a main se dispara el deploy
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. Descarga el código del repo
       - uses: actions/checkout@v2
+
+      # 2. Despliega a Firebase Hosting usando la acción oficial
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CINEPROMPT }}"
-          channelId: live
-          projectId: cineprompt-ai
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"          # Token interno de GitHub
+          firebaseServiceAccount: "${{ secrets.firebaseServiceAccount }}"  # <- NOMBRE EXACTO del secret
+          channelId: live                                   # Publica en el sitio “live”
+          projectId: cineprompt-ai                          # ID de tu proyecto Firebase
